@@ -1,5 +1,10 @@
 # Fender Digital Platform Engineering Challenge
 
+## Solution - how to run, and current state
+
+No dependencies. Go into the binaries directory and run the program. It accepts environment arg PORT.
+For testing endpoints, see server.js or use the included Postman collection with https://www.getpostman.com/.
+
 ## Description
 
 Design and implement a RESTful web service to facilitate a user authentication system. The authentication mechanism should be *token based*. Requests and responses should be in **JSON**.
