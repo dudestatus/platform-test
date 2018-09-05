@@ -1,0 +1,27 @@
+{
+  "name": "platform-test-jf",
+  "version": "1.0.0",
+  "description": "Token based user authentication with user logout",
+  "main": "server.js",
+  "scripts": {
+    "test": "start",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudestatus/platform-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dudestatus/platform-test/issues"
+  },
+  "homepage": "https://github.com/dudestatus/platform-test#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "pg": "^7.4.3"
+  }
+}

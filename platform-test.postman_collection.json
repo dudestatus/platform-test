@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "3e24c3b3-68f8-4fcb-ac17-159110936c83",
+		"name": "platform-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "James",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Frier",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "guitarMaster5000",
+							"type": "text"
+						},
+						{
+							"key": "confirmPassword",
+							"value": "guitarMaster5000",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "james@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/user/login?email=james@gmail.com&password=guitarMaster5000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "james@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "guitarMaster5000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/logout",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTUzNTYwNjU5NywiZXhwIjoxNTM1NjEwMTk3fQ.t8xO87bFyiW7I5_nU5WrVWritYu-GeAXbgx2Ki5Zt6c"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/user/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTUzNTYwNjYxMywiZXhwIjoxNTM1NjEwMjEzfQ.tUjczi08snAX-WRmdYh93qTizFskPmLpSq9C53BvjfI"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "James",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Frier",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "james.hopefully@fender.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/user/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTUzNTYwMjA4OCwiZXhwIjoxNTM1NjA1Njg4fQ.5suz9X7tiRzk710Or2mjoTcStyAHNmTJl-ZvQ9ai7o0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/user/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
