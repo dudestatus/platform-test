@@ -1,6 +1,6 @@
 
 // used in the userModel data operations, decouples the model with the db implementation
-const userRepository = require('./userRepository');
+const userRepository = require('./userRepositoryPostgreSQL');
 
 
 class User {
@@ -65,33 +65,29 @@ class User {
     }
 
     /**
-     * saves the user, returns the id
      * throws exception on validation
      */
-    save() {
+    async save() {
         this.validate();
 
         if (!this.id) {
-            // returns the id of the createdUser. no set method, so writing to it directly
-            this._id =  userRepository.createUser(this);
+            return userRepository.createUser(this);
         } else {
-            userRepository.updateUser(this.id, this);
+            return userRepository.updateUser(this.id, this);
         }
-
-        return this.id
     }
 
     // going to do this operation for simplicity, but usually a bad idea to delete since there may database be references to the user
     // you could do a cascade operation, but that only removes references in this db, and userId may be referenced in the separate analytics platform etc.
-    delete() {
-        userRepository.deleteUser(this.id);
+    async delete() {
+        return userRepository.deleteUser(this.id);
     }
 
-    static getFromId(id) {
+    static async getFromId(id) {
         return userRepository.getUser(id);
     }
 
-    static getFromEmail(email) {
+    static async getFromEmail(email) {
         return userRepository.getUserFromEmail(email)
     }
 

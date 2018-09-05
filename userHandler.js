@@ -20,10 +20,10 @@ const PASS_REQUIREMENTS_ERROR = "password does not meet requirements. must be 8 
 /*
 returns User instance for the user matching the token, or throws an exception with message AUTH_ERROR
  */
-const getUserFromToken = token => {
+const getUserFromToken = async token => {
     const tokenPayload = jwt.verify(token, TOKEN_SECRET);
 
-    const user = User.getFromId(tokenPayload[TOKEN_USER_ID_FIELD]);
+    const user = await User.getFromId(tokenPayload[TOKEN_USER_ID_FIELD]);
 
     if (user === null) {
         console.warn(`User not found`);  // todo remove logging
@@ -43,8 +43,9 @@ const getUserFromToken = token => {
  * @param {string} password
  * @param {string} confirmPassword
  * @param {string} email
+ * @returns {Promise}
  */
-const createUser = (firstName, lastName, password, confirmPassword, email) => {
+const createUser = async (firstName, lastName, password, confirmPassword, email) => {
 
     // validate
     if (password !== confirmPassword) {
@@ -56,7 +57,7 @@ const createUser = (firstName, lastName, password, confirmPassword, email) => {
         throw PASS_REQUIREMENTS_ERROR;
     }
 
-    if (User.getFromEmail(email.toLowerCase()) !== null) {
+    if (await User.getFromEmail(email.toLowerCase()) !== null) {
         // better to pretend to have a successful response to make it harder for users could mine emails
         console.warn(`Attempt to create existing user ${email}`);
         return;
@@ -74,7 +75,7 @@ const createUser = (firstName, lastName, password, confirmPassword, email) => {
 
     user.email = email;
 
-    user.save();
+    return user.save();
 };
 
 /**
@@ -83,8 +84,8 @@ const createUser = (firstName, lastName, password, confirmPassword, email) => {
  * @param {string} password
  * @returns {string}
  */
-const login = (email, password) => {
-    const user = User.getFromEmail(email.toLowerCase());
+const login = async (email, password) => {
+    const user = await User.getFromEmail(email.toLowerCase());
 
     if (user === null) {
         throw AUTH_ERROR;
@@ -105,40 +106,42 @@ const login = (email, password) => {
  * @param {string} token
  * @param {string} firstName
  * @param {string} lastName
- * @param {string} email
+ * @returns {Promise}
  */
-const updateUser = (token, firstName, lastName, email) => {
+const updateUser = async (token, firstName, lastName, email) => {
 
-    const user = getUserFromToken(token);
+    const user = await getUserFromToken(token);
 
     // better to be explicit about what gets updated,
     // but in the future if there are more things that need to be updated, it might be nice to define the user schema in json and pass an expected object
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
-    user.save();
+    return user.save();
 };
 
 /**
  * logoutUser -- given a user was retrieved with the provided token, log the user out by setting user prop logoutTime to the current time.
  * No tokens will be accepted if created before the user logoutTime; see getUserFromToken function above.
  * @param {string} token
+ * @returns {Promise}
  */
-const logoutUser = (token) => {
-    const user = getUserFromToken(token);
+const logoutUser = async (token) => {
+    const user = await getUserFromToken(token);
 
     user.logoutTime = Math.floor(Date.now() / 1000);
-    user.save();
+    return user.save();
 };
 
 /**
  * deleteUser -- given a user was retrieved with the provided token, delete the user
  * @param {string} token
+ * @returns {Promise}
  */
-const deleteUser = (token) => {
-    const user = getUserFromToken(token);
+const deleteUser = async (token) => {
+    const user = await getUserFromToken(token);
 
-    user.delete();
+    return user.delete();
 };
 
 

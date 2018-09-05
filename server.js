@@ -10,43 +10,70 @@ const userHandler = require('./userHandler');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-app.post('/user/register', (req, res) => {
-    userHandler.createUser(
-        req.body.firstName || '',
-        req.body.lastName || '',
-        req.body.password || '',
-        req.body.confirmPassword || '',
-        req.body.email || '',
-    );
-    res.sendStatus(204);
+// error handler
+// todo support user error 4xx codes
+app.use(function(error, req, res, next) {
+    res.status(500);
+    res.render('500');
 });
 
-app.get('/user/login', (req, res) => {
-    const token = userHandler.login(
-        req.query.email || '',
-        req.query.password || '',
-    );
-    res.send(token);
+app.post('/user/register', async (req, res, next) => {
+    try {
+        await userHandler.createUser(
+            req.body.firstName || '',
+            req.body.lastName || '',
+            req.body.password || '',
+            req.body.confirmPassword || '',
+            req.body.email || '',
+        );
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
 });
 
-app.put('/user/logout', (req, res) => {
-    userHandler.logoutUser(req.headers.authorization || '');
-    res.sendStatus(204);
+app.get('/user/login', async (req, res, next) => {
+    try {
+        const token = await userHandler.login(
+            req.query.email || '',
+            req.query.password || '',
+        );
+        res.send(token);
+    } catch (err) {
+        next(err);
+    }
 });
 
-app.put('/user/update', (req, res) => {
-    userHandler.updateUser(
-        req.headers.authorization || '',
-        req.body.firstName || '',
-        req.body.lastName || '',
-        req.body.email || ''
-    );
-    res.sendStatus(204);
+app.put('/user/logout', async (req, res, next) => {
+    try {
+        await userHandler.logoutUser(req.headers.authorization || '');
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
 });
 
-app.delete('/user/delete', (req, res) => {
-    userHandler.deleteUser(req.headers.authorization);
-    res.sendStatus(204);
+app.put('/user/update', async (req, res, next) => {
+    try {
+        await userHandler.updateUser(
+            req.headers.authorization || '',
+            req.body.firstName || '',
+            req.body.lastName || '',
+            req.body.email || ''
+        );
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.delete('/user/delete', async (req, res, next) => {
+    try {
+        await userHandler.deleteUser(req.headers.authorization);
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
 });
 
 const port = process.env.PORT || 3001;
